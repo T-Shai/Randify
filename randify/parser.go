@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// ReplaceRand : parse and replace errors : iteract with user in error
+// ReplaceRand : parse and replace errors : interact with user when parse error otherwide panic
 func ReplaceRand(data string, indenti string) string {
 	//prevData := ""
 	replacedData := data
@@ -56,6 +56,10 @@ func ReplaceRand(data string, indenti string) string {
 					ri = fmt.Sprint(rand.Float32())
 					break
 
+				case "float":
+					ri = fmt.Sprint(rand.Float32())
+					break
+
 				case "float64":
 					ri = fmt.Sprint(rand.Float64())
 					break
@@ -88,48 +92,63 @@ func ReplaceRand(data string, indenti string) string {
 				case "int":
 					param, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
+					positiveChecker(expr, param)
 					ri = fmt.Sprint(rand.Intn(param))
 					break
 
 				case "int31":
 					param, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
+					positiveChecker(expr, param)
 					ri = fmt.Sprint(rand.Int31n(int32(param)))
 					break
 
 				case "int63":
 					param, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
+					positiveChecker(expr, param)
 					ri = fmt.Sprint(rand.Int63n(int64(param)))
 					break
 
 				case "uint":
 					param, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
+					positiveChecker(expr, param)
 					ri = fmt.Sprint(rand.Uint32() % uint32(param))
 					break
 
 				case "uint32":
 					param, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
+					positiveChecker(expr, param)
 					ri = fmt.Sprint(rand.Uint32() % uint32(param))
 					break
 
 				case "uint64":
 					param, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
+					positiveChecker(expr, param)
 					ri = fmt.Sprint(rand.Uint64() % uint64(param))
+					break
+
+				case "float":
+					param, err := strconv.Atoi(args[1])
+					exceptionChecker(err)
+					positiveChecker(expr, param)
+					ri = fmt.Sprint(rand.Float32() * float32(param))
 					break
 
 				case "float32":
 					param, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
+					positiveChecker(expr, param)
 					ri = fmt.Sprint(rand.Float32() * float32(param))
 					break
 
 				case "float64":
 					param, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
+					positiveChecker(expr, param)
 					ri = fmt.Sprint(rand.Float64() * float64(param))
 					break
 
@@ -157,6 +176,7 @@ func ReplaceRand(data string, indenti string) string {
 					exceptionChecker(err)
 					max, err2 := strconv.Atoi(args[2])
 					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
 					ri = fmt.Sprint(rand.Intn(max-min) + min)
 					break
 
@@ -165,6 +185,7 @@ func ReplaceRand(data string, indenti string) string {
 					exceptionChecker(err)
 					max, err2 := strconv.Atoi(args[2])
 					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
 					ri = fmt.Sprint(rand.Int31n(int32(max-min)) + int32(min))
 					break
 
@@ -173,6 +194,7 @@ func ReplaceRand(data string, indenti string) string {
 					exceptionChecker(err)
 					max, err2 := strconv.Atoi(args[2])
 					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
 					ri = fmt.Sprint(rand.Int63n(int64(max-min)) + int64(min))
 					break
 
@@ -181,6 +203,7 @@ func ReplaceRand(data string, indenti string) string {
 					exceptionChecker(err)
 					max, err2 := strconv.Atoi(args[2])
 					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
 					ri = fmt.Sprint(rand.Uint32()%uint32(max-min) + uint32(min))
 					break
 
@@ -189,6 +212,7 @@ func ReplaceRand(data string, indenti string) string {
 					exceptionChecker(err)
 					max, err2 := strconv.Atoi(args[2])
 					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
 					ri = fmt.Sprint(rand.Uint32()%uint32(max-min) + uint32(min))
 					break
 
@@ -197,7 +221,35 @@ func ReplaceRand(data string, indenti string) string {
 					exceptionChecker(err)
 					max, err2 := strconv.Atoi(args[2])
 					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
 					ri = fmt.Sprint(rand.Uint32()%uint32(max-min) + uint32(min))
+					break
+
+				case "float":
+					min, err := strconv.Atoi(args[1])
+					exceptionChecker(err)
+					max, err2 := strconv.Atoi(args[2])
+					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
+					ri = fmt.Sprint(rand.Float32()*float32(max-min) + float32(min))
+					break
+
+				case "float32":
+					min, err := strconv.Atoi(args[1])
+					exceptionChecker(err)
+					max, err2 := strconv.Atoi(args[2])
+					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
+					ri = fmt.Sprint(rand.Float32()*float32(max-min) + float32(min))
+					break
+
+				case "float64":
+					min, err := strconv.Atoi(args[1])
+					exceptionChecker(err)
+					max, err2 := strconv.Atoi(args[2])
+					exceptionChecker(err2)
+					positiveChecker(expr, max-min)
+					ri = fmt.Sprint(rand.Float64()*float64(max-min) + float64(min))
 					break
 
 				default:
@@ -233,80 +285,4 @@ func ReplaceRand(data string, indenti string) string {
 		}
 	}
 	return replacedData
-}
-
-// func ReplaceRand(data string, indenti string) string {
-// 	prevData := ""
-// 	replacedData := data
-// 	for replacedData != prevData {
-// 		prevData = replacedData
-// 		// Int
-// 		sbs := "[" + indenti + " Int]"
-// 		if strings.Contains(replacedData, sbs) {
-// 			ri := fmt.Sprint(rand.Int())
-// 			replacedData = strings.Replace(replacedData, sbs, ri, 1)
-// 		}
-// 		// ExpFloat64
-// 		sbs = "[" + indenti + " ExpFloat64]"
-// 		if strings.Contains(replacedData, sbs) {
-// 			ri := fmt.Sprint(rand.ExpFloat64())
-// 			replacedData = strings.Replace(replacedData, sbs, ri, 1)
-// 		}
-
-// 		// Float32
-// 		sbs = "[" + indenti + " Float32]"
-// 		if strings.Contains(replacedData, sbs) {
-// 			ri := fmt.Sprint(rand.Float32())
-// 			replacedData = strings.Replace(replacedData, sbs, ri, 1)
-// 		}
-
-// 		// Float64
-// 		sbs = "[" + indenti + " Float64]"
-// 		if strings.Contains(replacedData, sbs) {
-// 			ri := fmt.Sprint(rand.Float64())
-// 			replacedData = strings.Replace(replacedData, sbs, ri, 1)
-// 		}
-
-// 		// Int31
-// 		sbs = "[" + indenti + " Int31]"
-// 		if strings.Contains(replacedData, sbs) {
-// 			ri := fmt.Sprint(rand.Int31())
-// 			replacedData = strings.Replace(replacedData, sbs, ri, 1)
-// 		}
-
-// 		// Int63
-// 		sbs = "[" + indenti + " Int63]"
-// 		if strings.Contains(replacedData, sbs) {
-// 			ri := fmt.Sprint(rand.Int63())
-// 			replacedData = strings.Replace(replacedData, sbs, ri, 1)
-// 		}
-
-// 		// normFloat
-// 		sbs = "[" + indenti + " Int31]"
-// 		if strings.Contains(replacedData, sbs) {
-// 			ri := fmt.Sprint(rand.Int31())
-// 			replacedData = strings.Replace(replacedData, sbs, ri, 1)
-// 		}
-
-// 		// Regex part
-// 		// Int31n
-// 		sbs = "[" + indenti + " Int31 ]"
-// 		if strings.Contains(replacedData, sbs) {
-// 			ri := fmt.Sprint(rand.Float32())
-// 			replacedData = strings.Replace(replacedData, sbs, ri, 1)
-// 		}
-
-// 	}
-
-// 	return replacedData
-// }
-
-/*
-NewContext : returns a pointer to Context with given pathToFile and seed
-*/
-func NewContext(fname string, seed int64) *Context {
-	c := new(Context)
-	c.pathToFile = fname
-	c.seed = seed
-	return c
 }

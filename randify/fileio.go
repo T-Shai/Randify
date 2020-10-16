@@ -7,3 +7,8 @@ func readFile(filename string) string {
 	exceptionChecker(err)
 	return string(data)
 }
+
+func writeFile(filename string, data string) {
+	err := ioutil.WriteFile(filename, []byte(data), 0644)
+	exceptionChecker(err)
+}
