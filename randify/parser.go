@@ -2,32 +2,13 @@ package randify
 
 import (
 	"fmt"
-	"io/ioutil"
 	"math/rand"
 	"regexp"
 	"strconv"
 	"strings"
 )
 
-// Context : contains pathToFile and random gen info
-type Context struct {
-	pathToFile string
-	seed       int64
-}
-
-func exceptionChecker(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
-func readFile(filename string) string {
-	data, err := ioutil.ReadFile(filename)
-	exceptionChecker(err)
-	return string(data)
-}
-
-// ReplaceRand :
+// ReplaceRand : parse and replace errors : iteract with user in error
 func ReplaceRand(data string, indenti string) string {
 	//prevData := ""
 	replacedData := data
@@ -196,6 +177,22 @@ func ReplaceRand(data string, indenti string) string {
 					break
 
 				case "uint":
+					min, err := strconv.Atoi(args[1])
+					exceptionChecker(err)
+					max, err2 := strconv.Atoi(args[2])
+					exceptionChecker(err2)
+					ri = fmt.Sprint(rand.Uint32()%uint32(max-min) + uint32(min))
+					break
+
+				case "uint32":
+					min, err := strconv.Atoi(args[1])
+					exceptionChecker(err)
+					max, err2 := strconv.Atoi(args[2])
+					exceptionChecker(err2)
+					ri = fmt.Sprint(rand.Uint32()%uint32(max-min) + uint32(min))
+					break
+
+				case "uint64":
 					min, err := strconv.Atoi(args[1])
 					exceptionChecker(err)
 					max, err2 := strconv.Atoi(args[2])
