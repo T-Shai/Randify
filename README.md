@@ -47,8 +47,56 @@ Well not exactly... my back account shows -943€
 for my birthday, i ll get 5 gifts !
 ```
 
-### Usage
+Also check example directory for an example with markdown file
+
+### Usage Help
 use ``.\executable.exe -h``
 
+#### Avaiable command line flags :
+
+   **-i** string  **NOT OPTIONAL**
+   
+        Path to the input filename (must be defined)
+        EX : ./executable.exe -i path/to/input.txt
+        
+        Any ascii readable file (tested with .txt and .md)
+        
+  **-ext** string
+  
+        output file's extension without dot (default "randify")
+        EX : ./executable.exe -ext myOutputFileName
+        
+        you will get myOutputFileName0, myOutputFileName1, etc... for each file 
+        
+  **-id** string
+  
+        Identifier to put in brackets before expressions (default "RAND")
+        EX : ./executable.exe -id myOwnIdentifier
+        
+        it will be the the identifier that you ll have to put in bracket before expressions
+        EX  in your input file : "this is a random integer between -10 and 10 : [myOwnIdentifier int -10 10]"
+        
+  **-n** uint
+  
+        number of file to be created (all with randomly different values) (default 1)
+        EX : ./executable.exe -n 5
+        
+        n must be > 0 to output a file
+        
+  **-o** string
+  
+        output file's name without extension (default "output")
+        EX : ./executable.exe -o path/to/myFileWithoutextension
+        
+        only the filename without extension if you want to change the extension use -ext
+        
+  **-seed** int
+  
+        seed for random values DEFAULT: current time (default time.Now().UnixNano())
+        EX : ./executable.exe -seed 544
+        
+        set the seed if you want 
+
 ## known bug
-None 😎😎
+~~None 😎😎 yet...~~
+output same file sometimes *(problem with coroutines and math/rand ?)*
