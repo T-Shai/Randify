@@ -14,7 +14,7 @@ func ReplaceRand(data string, indenti string) string {
 	replacedData := data
 	re := regexp.MustCompile(`\[([^]]+)\]`)
 	matches := re.FindAllString(replacedData, -1)
-	fmt.Println(matches)
+	//fmt.Println(matches)
 	for _, expr := range matches {
 		// fmt.Println(expr)
 		ri := expr
